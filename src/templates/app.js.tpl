@@ -6,7 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-<#  raml.resources.forEach(function(resource) { #>
+<#  raml.resources().forEach(function(resource) { #>
 var ${resource.entity.setname} = require('./routes/${resource.entity.setname}');
 <#  }); #>
 
@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-<#  raml.resources.forEach(function(resource) { #>
+<#  raml.resources().forEach(function(resource) { #>
 app.use('/', ${resource.entity.setname});
 <#  }); #>
 

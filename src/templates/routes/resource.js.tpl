@@ -13,11 +13,11 @@ function route(prefix, resource) {
 <#        
     }
 
-    var uri = resource.relativeUri;        
+    var uri = resource.relativeUri().value();        
     if (uri[0] == '/' && uri[1] == '{')
         uri = '/:' + uri.substring(2, uri.length -1);
         
-    resource.methods.forEach(function (method) {
+    resource.methods().forEach(function (method) {
         if (method.description) { #>
 // ${method.description}
 <#        
@@ -28,8 +28,8 @@ router.${method.method}(${url}, controller.${method.fn.name});
 <#
     });
     
-    if (resource.resources)
-        resource.resources.forEach(function (subresource) {
+    if (resource.resources().length > 0)
+        resource.resources().forEach(function (subresource) {
             route(prefix + uri, subresource);
         });
 }
