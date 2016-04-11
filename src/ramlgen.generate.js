@@ -13,20 +13,17 @@ let generate = function(model, ramlfile, dirname, ajgenesis) {
         model.builddir = dirname;
         model.names = utils.names;
 
-        if (!model.project)
-            model.project = { name: projectName, version: '0.0.1' };
-        
         var pos = ramlfile.indexOf(':');
         if (pos > 0)
             ramlfile = ramlfile.substring(pos + 1);
 
-
          let ramlFilePath = path.resolve(ramlfile);
-
+         
           parser.loadApi(ramlFilePath)
             .then(function(raml) {
                 utils.resources.complete(raml);
                 model.raml = raml;
+                model.project = { name: raml.title(), version: raml.version() };
 
                 var builddir = model.builddir;
                 var controllersdir = path.join(builddir, 'controllers');

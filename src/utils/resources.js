@@ -6,10 +6,10 @@ let complete = function(obj, prefix) {
     if (!prefix)
         prefix = '';
 
-    if (!obj || !obj.resources() || !obj.resources().length)
+    if (!obj || !obj.allResources() || !obj.allResources().length)
         return;
 
-    obj.resources().forEach(function(resource) {
+    obj.allResources().forEach(function(resource) {
         completeResource(resource, prefix);
     });
 }
@@ -17,10 +17,9 @@ let complete = function(obj, prefix) {
 let completeResource = function(resource, prefix) {
     resource.entity = {};
 
-    var name = names.getName(resource.relativeUri().value());
+    var name = names.getName(resource.completeRelativeUri());
     
-    console.log(`----------------------------------`);
-    console.log(`resource -> ${name}`);
+    console.log(`resource -> ${name} - completeRelativeUri ${resource.completeRelativeUri()}  - methods [${resource.methods().length}]...`);
     
     if (name) {
         if (name[0] == '{') {
@@ -39,7 +38,6 @@ let completeResource = function(resource, prefix) {
     }
 
     if (resource.methods())
-        console.log(`   parsing methods [${resource.methods().length}]...`);
         resource.methods().forEach(function(method) {
             method.fn = {};
             
@@ -48,10 +46,9 @@ let completeResource = function(resource, prefix) {
             else
                 method.fn.name = method.method() + prefix + resource.entity.title;
             
-            console.log(`       method -> ${method.methodId()} -> ${method.fn.name}`);
-            console.log(`       parsing responses [${method.responses().length}]...`);
+            console.log(`method   -> ${method.methodId()} -> ${method.fn.name} - parsing responses [${method.responses().length}]...`);
             method.responses().forEach(function (response) {
-                console.log(`           response -> ${response.code().value()}`);
+                console.log(`response -> ${response.code().value()}`);
                 var code = response.code().value();
                 if (response.code().value() == '200' && response.body().length > 0) {
                 var body = response.body()[0];
