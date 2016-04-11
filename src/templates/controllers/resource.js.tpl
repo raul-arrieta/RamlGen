@@ -16,8 +16,8 @@ module.exports = {
 <#
 
 function actions(prefix, resource) {
-    if (resource.description) { #>
-// ${resource.description}
+    if (resource.description() && resource.description().value()) { #>
+// ${resource.description().value()}
 <#        
     }
         
@@ -25,8 +25,8 @@ function actions(prefix, resource) {
         if (!method.fn)
             return;
     
-        if (method.description) { #>
-// ${method.description}
+        if (method.description() && method.description().value()) { #>
+// ${method.description().value()}
 <#        
         }
         

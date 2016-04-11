@@ -2,32 +2,12 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Launch Create",
-			"type": "node",
-			"request": "launch",
-			"program": "${workspaceRoot}\\src\\app.js",
-			"stopOnEntry": false,
-			"args": ["create","test000outdir"],
-			"cwd": "${workspaceRoot}",
-			"preLaunchTask": null,
-			"runtimeExecutable": null,
-			"runtimeArgs": [
-				"--nolazy"
-			],
-			"env": {
-				"NODE_ENV": "development"
-			},
-			"externalConsole": false,
-			"sourceMaps": false,
-			"outDir": null
-		},
-        		{
 			"name": "Launch Generate",
 			"type": "node",
 			"request": "launch",
 			"program": "${workspaceRoot}\\src\\app.js",
 			"stopOnEntry": false,
-			"args": ["generate","${workspaceRoot}\\test\\simple.raml","test000outdir"],
+			"args": ["${workspaceRoot}\\test\\simple.raml","test000outdir"],
 			"cwd": "${workspaceRoot}",
 			"preLaunchTask": null,
 			"runtimeExecutable": null,

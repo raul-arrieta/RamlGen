@@ -18,7 +18,10 @@ let completeResource = function(resource, prefix) {
     resource.entity = {};
 
     var name = names.getName(resource.relativeUri().value());
-
+    
+    console.log(`----------------------------------`);
+    console.log(`resource -> ${name}`);
+    
     if (name) {
         if (name[0] == '{') {
             name = name.substring(1, name.length - 1);
@@ -36,22 +39,29 @@ let completeResource = function(resource, prefix) {
     }
 
     if (resource.methods())
+        console.log(`   parsing methods [${resource.methods().length}]...`);
         resource.methods().forEach(function(method) {
             method.fn = {};
-
-            if (method.method == 'get' && prefix == '')
-                method.fn.name = method.method + prefix + resource.entity.settitle;
+            
+            if (method.method() == 'get' && prefix == '')
+                method.fn.name = method.method() + prefix + resource.entity.settitle;
             else
-                method.fn.name = method.method + prefix + resource.entity.title;
+                method.fn.name = method.method() + prefix + resource.entity.title;
+            
+            console.log(`       method -> ${method.methodId()} -> ${method.fn.name}`);
+            console.log(`       parsing responses [${method.responses().length}]...`);
+            method.responses().forEach(function (response) {
+                console.log(`           response -> ${response.code().value()}`);
+                var code = response.code().value();
+                if (response.code().value() == '200' && response.body().length > 0) {
+                var body = response.body()[0];
 
-            if (method.responses) {
-                if (method.responses['200'] && method.responses['200'].body) {
-                    var body = method.responses['200'].body;
-
-                    if (body['application/json'] && body['application/json'].example)
-                        method.fn.example = body['application/json'].example;
-                }
+                if (body.example() && body.example().value())
+                        method.fn.example = body.example().value();
             }
+            });
+
+            
         });
 
     if (resource.resources())

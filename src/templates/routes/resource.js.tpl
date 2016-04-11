@@ -8,8 +8,8 @@ var controller = require('../controllers/${resource.entity.setname}');
 route('', resource);
 
 function route(prefix, resource) {
-    if (resource.description) { #>
-// ${resource.description}
+    if (resource.description() && resource.description().value()) { #>
+// ${resource.description().value()}
 <#        
     }
 
@@ -18,13 +18,13 @@ function route(prefix, resource) {
         uri = '/:' + uri.substring(2, uri.length -1);
         
     resource.methods().forEach(function (method) {
-        if (method.description) { #>
-// ${method.description}
+        if (method.description() && method.description().value()) { #>
+// ${method.description().value()}
 <#        
         }
                 
         var url = "'" + prefix + uri + "'"; #>
-router.${method.method}(${url}, controller.${method.fn.name});        
+router.${method.method()}(${url}, controller.${method.fn.name});        
 <#
     });
     

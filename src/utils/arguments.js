@@ -6,17 +6,7 @@ let cleanArguments = function(args) {
     return args.slice(2);
 }
 
-let getFirstArgument = function (args) {
-    return args[0].toLowerCase();
-}
-
-let createParam = function (params) { return "create"; }
-let generateParam = function (params) { return "generate"; }
-
 module.exports = {
-    create: createParam,
-    generate: generateParam,
     cleanArguments: cleanArguments,
-    getFirstArgument: getFirstArgument,
 }
 

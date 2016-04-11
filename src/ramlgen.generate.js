@@ -5,6 +5,7 @@ const parser = require('raml-1-parser');
 
 let generate = function(model, ramlfile, dirname, ajgenesis) {
 
+    let projectName = "test";
     let tmpdirname = path.join(dirname);
     let source = path.resolve(path.join(__dirname));
 
@@ -13,7 +14,7 @@ let generate = function(model, ramlfile, dirname, ajgenesis) {
         model.names = utils.names;
 
         if (!model.project)
-            model.project = { name: source, version: '0.0.1' };
+            model.project = { name: projectName, version: '0.0.1' };
         
         var pos = ramlfile.indexOf(':');
         if (pos > 0)
@@ -23,7 +24,6 @@ let generate = function(model, ramlfile, dirname, ajgenesis) {
          let ramlFilePath = path.resolve(ramlfile);
 
           parser.loadApi(ramlFilePath)
-//        parser.loadFile(ramlfile)
             .then(function(raml) {
                 utils.resources.complete(raml);
                 model.raml = raml;

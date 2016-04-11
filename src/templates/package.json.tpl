@@ -12,8 +12,6 @@
     "cookie-parser": "~1.0.1",
     "body-parser": "~1.0.0",
     "debug": "~0.7.4",
-    "ejs": "~0.8.5",
-    "mongodb": "1.4.5"
   },
   "devDependencies": {
   }
